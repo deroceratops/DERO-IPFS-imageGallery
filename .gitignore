@@ -1,3 +1,6 @@
+# File with Smart Contract ID
+src/scid.js
+
 # Logs
 logs
 *.log
