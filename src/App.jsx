@@ -5,6 +5,7 @@ import to from "await-to-js";
 import Images from "./components/Images";
 import Spinner from "./components/Spinner";
 import scid from "./scid.js";
+import { hex2a } from "./helpers.js";
 
 // TODO: Refactor into several files if possible.
 function App() {
@@ -18,6 +19,8 @@ function App() {
   const [CID, setCID] = useState("");
 
   const pinataBaseURL = "https://beige-colossal-snail-501.mypinata.cloud/ipfs/";
+  const JWT =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiIzODJmMmVjOC1hMzYwLTQ2ZjAtYTRhYS02MDBlNzU2YTIwNmQiLCJlbWFpbCI6ImNvbnNlcXVlbnRydWJiZXJzQHByb3Rvbi5tZSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJwaW5fcG9saWN5Ijp7InJlZ2lvbnMiOlt7ImlkIjoiRlJBMSIsImRlc2lyZWRSZXBsaWNhdGlvbkNvdW50IjoxfSx7ImlkIjoiTllDMSIsImRlc2lyZWRSZXBsaWNhdGlvbkNvdW50IjoxfV0sInZlcnNpb24iOjF9LCJtZmFfZW5hYmxlZCI6ZmFsc2UsInN0YXR1cyI6IkFDVElWRSJ9LCJhdXRoZW50aWNhdGlvblR5cGUiOiJzY29wZWRLZXkiLCJzY29wZWRLZXlLZXkiOiI0MzYxN2VjNzA0ZWZlYzkwZTBlNyIsInNjb3BlZEtleVNlY3JldCI6IjJhZDI1NjMzZjM5ZTMwZGM5YzY3MWJiMDU5MjZmYWQxY2ZhYjkyOTdiNDhmMTYzYzlkYzhiNjZjZTc2NDg1N2YiLCJpYXQiOjE2ODYzMTMzODJ9.gZXqcnKMYMoEWidq1Q141ndELkE3UIckxdaZoEXl_oU";
 
   useEffect(() => {
     const load = async () => {
@@ -65,7 +68,7 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bridgeInitText]);
 
-  const saveFileURL = async (IpfsHash) => {
+  const saveFileCID = async (IpfsHash) => {
     const [err, res] = await to(
       deroBridgeApi.wallet("start-transfer", {
         ringsize: 2,
@@ -94,20 +97,6 @@ function App() {
       setFileCIDsToDisplay(newFileCIDs);
     }
   };
-
-  function hex2a(hex) {
-    if (!hex) {
-      return;
-    }
-    let str = "";
-    for (let i = 0; i < hex.length; i += 2) {
-      str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
-    }
-    return str;
-  }
-
-  const JWT =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiIzODJmMmVjOC1hMzYwLTQ2ZjAtYTRhYS02MDBlNzU2YTIwNmQiLCJlbWFpbCI6ImNvbnNlcXVlbnRydWJiZXJzQHByb3Rvbi5tZSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJwaW5fcG9saWN5Ijp7InJlZ2lvbnMiOlt7ImlkIjoiRlJBMSIsImRlc2lyZWRSZXBsaWNhdGlvbkNvdW50IjoxfSx7ImlkIjoiTllDMSIsImRlc2lyZWRSZXBsaWNhdGlvbkNvdW50IjoxfV0sInZlcnNpb24iOjF9LCJtZmFfZW5hYmxlZCI6ZmFsc2UsInN0YXR1cyI6IkFDVElWRSJ9LCJhdXRoZW50aWNhdGlvblR5cGUiOiJzY29wZWRLZXkiLCJzY29wZWRLZXlLZXkiOiI0MzYxN2VjNzA0ZWZlYzkwZTBlNyIsInNjb3BlZEtleVNlY3JldCI6IjJhZDI1NjMzZjM5ZTMwZGM5YzY3MWJiMDU5MjZmYWQxY2ZhYjkyOTdiNDhmMTYzYzlkYzhiNjZjZTc2NDg1N2YiLCJpYXQiOjE2ODYzMTMzODJ9.gZXqcnKMYMoEWidq1Q141ndELkE3UIckxdaZoEXl_oU";
 
   async function handleUpload(e) {
     e.preventDefault();
@@ -159,7 +148,7 @@ function App() {
         setInfo(["File uploaded. ", "green"]);
 
         setCID(IpfsHash);
-        saveFileURL(IpfsHash);
+        saveFileCID(IpfsHash);
       })
       .catch((error) => {
         setLoading(false);
