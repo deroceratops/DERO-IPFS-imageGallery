@@ -4,6 +4,7 @@ import DeroBridgeApi from "dero-rpc-bridge-api";
 import to from "await-to-js";
 import Images from "./components/Images";
 import Spinner from "./components/Spinner";
+import Fullscreen from "./components/Fullscreen";
 import scid from "./scid.js";
 import { hex2a } from "./helpers.js";
 
@@ -17,6 +18,10 @@ function App() {
   const [info, setInfo] = useState([]);
   const [loading, setLoading] = useState(false);
   const [CID, setCID] = useState("");
+  const [fullscreen, setFullscreen] = useState(false);
+  const [fullscreenImage, setFullscreenImage] = useState("");
+  const [pageYOffset, setPageYOffset] = useState(0);
+  const [innerHeight, setInnerHeight] = useState(0);
 
   const pinataBaseURL = "https://beige-colossal-snail-501.mypinata.cloud/ipfs/";
   const JWT =
@@ -157,8 +162,27 @@ function App() {
       });
   };
 
+  window.addEventListener("scroll", () => {
+    setPageYOffset(window.pageYOffset);
+    setInnerHeight(window.innerHeight);
+  });
+
   return (
     <div className="App">
+      {(() => {
+        return fullscreen ? (
+          <Fullscreen
+            fullscreenImage={fullscreenImage}
+            setFullscreenImage={setFullscreenImage}
+            pinataBaseURL={pinataBaseURL}
+            setFullscreen={setFullscreen}
+            pageYOffset={pageYOffset}
+            innerHeight={innerHeight}
+            fileCIDsToDisplay={fileCIDsToDisplay}
+          />
+        ) : null;
+      })()}
+
       <header className="App-header">
         <h1>DERO Image Gallery</h1>
       </header>
@@ -200,7 +224,12 @@ function App() {
           );
         })()}
       </p>
-      <Images fileCIDs={fileCIDsToDisplay} baseURL={pinataBaseURL} />
+      <Images
+        fileCIDs={fileCIDsToDisplay}
+        baseURL={pinataBaseURL}
+        setFullscreen={setFullscreen}
+        setFullscreenImage={setFullscreenImage}
+      />
     </div>
   );
 }
