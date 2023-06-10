@@ -5,15 +5,12 @@ const Images = ({ fileCIDs, baseURL }) => {
   return (
     <div className="galleryImages">
       {fileCIDs.map((fileCID, key) => (
-        <a
-          className="galleryImageLink"
+        <div
+          className="galleryImageWrapper"
           key={key}
-          target="_blank"
-          rel="noopener noreferrer"
-          href={`${baseURL}${fileCID}`}
         >
           <Image baseURL={baseURL} image={fileCID} />
-        </a>
+        </div>
       ))}
     </div>
   );
