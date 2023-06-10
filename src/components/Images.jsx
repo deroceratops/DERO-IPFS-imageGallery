@@ -1,7 +1,11 @@
 import PropTypes from "prop-types";
 import Image from "./Image";
+import { useDataContext } from "../context/DataContext";
 
-const Images = ({ fileCIDs, baseURL, setFullscreen, setFullscreenImage }) => {
+const Images = ({ baseURL, setFullscreenOn, setFullscreenImage }) => {
+  const { fileCIDsToDisplay } = useDataContext();
+  const fileCIDs = fileCIDsToDisplay;
+
   return (
     <div className="galleryImages">
       {fileCIDs.map((fileCID, key) => (
@@ -10,7 +14,7 @@ const Images = ({ fileCIDs, baseURL, setFullscreen, setFullscreenImage }) => {
           key={key}
           onClick={() => {
             document.documentElement.style.overflow = "hidden";
-            setFullscreen(true);
+            setFullscreenOn(true);
             setFullscreenImage(fileCID);
           }}
         >
@@ -24,7 +28,7 @@ const Images = ({ fileCIDs, baseURL, setFullscreen, setFullscreenImage }) => {
 Images.propTypes = {
   fileCIDs: PropTypes.array,
   baseURL: PropTypes.string,
-  setFullscreen: PropTypes.func,
+  setFullscreenOn: PropTypes.func,
   setFullscreenImage: PropTypes.func,
 };
 

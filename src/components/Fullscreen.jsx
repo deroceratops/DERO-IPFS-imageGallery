@@ -1,18 +1,22 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDataContext } from "../context/DataContext";
 
 const Fullscreen = ({
+  fullscreenOn,
+  setFullscreenOn,
   fullscreenImage,
   setFullscreenImage,
   pinataBaseURL,
-  setFullscreen,
   pageYOffset,
   innerHeight,
-  fileCIDsToDisplay,
 }) => {
-  const [currentIndex, setCurrentIndex] = useState(
-    fileCIDsToDisplay.indexOf(fullscreenImage)
-  );
+  const { fileCIDsToDisplay } = useDataContext();
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    setCurrentIndex(fileCIDsToDisplay.indexOf(fullscreenImage));
+  }, [fileCIDsToDisplay, fullscreenImage]);
 
   const styles = {
     top: pageYOffset + "px",
@@ -29,13 +33,13 @@ const Fullscreen = ({
     setCurrentIndex(currentIndex + 1);
   }
 
-  return (
+  return fullscreenOn ? (
     <div className="fullScreen" style={styles}>
       <button
         className="closeButton"
         onClick={() => {
           document.documentElement.style.overflow = "auto";
-          setFullscreen(false);
+          setFullscreenOn(false);
         }}
       >
         &#10006;
@@ -62,10 +66,12 @@ const Fullscreen = ({
         </button>
       </div>
     </div>
-  );
+  ) : null;
 };
 
 Fullscreen.propTypes = {
+  fullscreenOn: PropTypes.bool,
+  setFullscreenOn: PropTypes.func,
   fullscreenImage: PropTypes.string,
   setFullscreenImage: PropTypes.func,
   pinataBaseURL: PropTypes.string,
