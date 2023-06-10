@@ -43,12 +43,25 @@ input[type="text"] {
   opacity: 0;
 }
 
+.red,
+.green {
+  padding: 0.2em;
+  border-radius: 4px;
+}
+
 .red {
-  color: red;
+  background-color: #ff2222;
+  color: #1a1a1a;
 }
 
 .green {
-  color: green;
+  background-color: #30ff30;
+  color: #1a1a1a;
+}
+
+.red a,
+.green a {
+  color: #1a1a1a;
 }
 
 form {
@@ -77,10 +90,6 @@ form input[type="submit"] {
   width: 44%;
 }
 
-a {
-  color: orangered;
-}
-
 .lds-ring {
   position: absolute;
   width: 80px;
@@ -104,10 +113,10 @@ a {
   width: 64px;
   height: 64px;
   margin: 8px;
-  border: 8px solid orangered;
+  border: 8px solid #CCACDC;
   border-radius: 50%;
   animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: orangered transparent transparent transparent;
+  border-color: #CCACDC transparent transparent transparent;
 }
 
 .lds-ring div:nth-child(1) {
