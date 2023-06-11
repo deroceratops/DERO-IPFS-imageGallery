@@ -2,16 +2,14 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { useDataContext } from "../context/DataContext";
 
-const Fullscreen = ({
-  fullscreenOn,
-  setFullscreenOn,
-  fullscreenImage,
-  setFullscreenImage,
-  pinataBaseURL,
-  pageYOffset,
-  innerHeight,
-}) => {
-  const { fileCIDsToDisplay } = useDataContext();
+const Fullscreen = ({ pinataBaseURL, pageYOffset, innerHeight }) => {
+  const {
+    fileCIDsToDisplay,
+    fullscreenOn,
+    setFullscreenOn,
+    fullscreenImage,
+    setFullscreenImage,
+  } = useDataContext();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {

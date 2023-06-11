@@ -11,8 +11,6 @@ function App() {
   const deroBridgeApiRef = useRef();
   const deroBridgeApi = deroBridgeApiRef.current;
   const [bridgeInitText, setBridgeInitText] = useState("");
-  const [fullscreenOn, setFullscreenOn] = useState(false);
-  const [fullscreenImage, setFullscreenImage] = useState("");
   const [pageYOffset, setPageYOffset] = useState(0);
   const [innerHeight, setInnerHeight] = useState(0);
 
@@ -46,11 +44,7 @@ function App() {
     <div className="App">
       <DataProvider>
         <Fullscreen
-          fullscreenOn={fullscreenOn}
-          fullscreenImage={fullscreenImage}
-          setFullscreenImage={setFullscreenImage}
           pinataBaseURL={pinataBaseURL}
-          setFullscreenOn={setFullscreenOn}
           pageYOffset={pageYOffset}
           innerHeight={innerHeight}
         />
@@ -64,11 +58,7 @@ function App() {
           deroBridgeApi={deroBridgeApi}
           pinataBaseURL={pinataBaseURL}
         />
-        <Images
-          baseURL={pinataBaseURL}
-          setFullscreenOn={setFullscreenOn}
-          setFullscreenImage={setFullscreenImage}
-        />
+        <Images baseURL={pinataBaseURL} />
       </DataProvider>
     </div>
   );

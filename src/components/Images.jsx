@@ -2,8 +2,9 @@ import PropTypes from "prop-types";
 import Image from "./Image";
 import { useDataContext } from "../context/DataContext";
 
-const Images = ({ baseURL, setFullscreenOn, setFullscreenImage }) => {
-  const { fileCIDsToDisplay } = useDataContext();
+const Images = ({ baseURL }) => {
+  const { fileCIDsToDisplay, setFullscreenOn, setFullscreenImage } =
+    useDataContext();
   const fileCIDs = fileCIDsToDisplay;
 
   return (

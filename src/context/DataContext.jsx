@@ -6,6 +6,8 @@ export const DataProvider = ({ children }) => {
   const [info, setInfo] = useState([]);
   const [CID, setCID] = useState("");
   const [fileCIDsToDisplay, setFileCIDsToDisplay] = useState([]);
+  const [fullscreenOn, setFullscreenOn] = useState(false);
+  const [fullscreenImage, setFullscreenImage] = useState("");
 
   return (
     <DataContext.Provider
@@ -18,6 +20,10 @@ export const DataProvider = ({ children }) => {
         setFileCIDsToDisplay,
         CID,
         setCID,
+        fullscreenOn,
+        setFullscreenOn,
+        fullscreenImage,
+        setFullscreenImage,
       }}
     >
       {children}
